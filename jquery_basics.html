@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		#box {
+			width: 200px;
+			height: 200px;
+			background-color: black;
+			padding: 20px;
+			margin: 50px auto;
+		}
+
+		#anim {
+			width: 200px;
+			height: 200px;
+			background-color: black;
+		}
+
+		#box:hover {
+			background-color: green;
+		}
+
+		.box {
+			width: 200px;
+			height: 200px;
+			background-color: gray;
+		}
+
+		.blue {
+			background-color: blue;
+		}
+	</style>
+</head>
+
+<body>
+	<h1 class="customClassName" id="customID">HI</h1>
+	<h1>Title 2</h1>
+	<button class="custom-class">Button</button>
+	<p class="custom-class">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis, cumque est. Repellat et,
+		adipisci doloremque
+		dolorem suscipit ipsam sequi nemo aspernatur dolores laborum veniam laudantium maiores inventore dicta, aliquid
+		dignissimos.</p>
+	<p id="custom-id">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis officiis maxime quos
+		earum natus! Esse
+		doloribus ipsam cumque obcaecati reprehenderit suscipit, neque quaerat mollitia officia illo voluptate quisquam
+		fugiat alias.</p>
+	<input type="text" class="select-me" value="Hello World">
+	<section>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia, quasi vero praesentium in hic consectetur
+		enim dolorem laborum similique et optio, ex ratione numquam, deserunt veritatis perspiciatis ea nihil
+		dignissimos?</section>
+	<div id="target">Add HTML</div>
+	<div id="parent">
+		<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque aspernatur vel atque vero beatae. Quidem cum
+			explicabo, ab maiores quam, pariatur corrupti in eveniet amet, adipisci id. Soluta, ex molestiae!</p>
+		<p class="middle-p">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab dicta error voluptatum, odio
+			quia fugit cum
+			sequi quae facere dolores, sed suscipit sapiente, numquam autem id magni architecto velit explicabo!</p>
+		<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In, alias saepe consequuntur architecto amet nemo ut
+			delectus itaque necessitatibus, incidunt blanditiis ipsam quas corrupti maiores earum, modi velit molestias
+			tenetur.</p>
+		<strong>Bolded</strong>
+		<em>KK</em>
+	</div>
+	<div id="buttonHere"></div>
+	<button id="clickme">Hide</button>
+	<div id="box"></div>
+	<textarea name="mytextarea" rows=10></textarea>
+	<form>
+		<input type="text" placeholder="Your name">
+		<button type="submit">Submit</button>
+	</form>
+	<button class="remove-blue">Remove blue</button>
+	<button class="toggle-blue">Toggle blue</button>
+	<div class="box"></div>
+	<div id="anim"></div>
+
+	<button id="animation">Animation</button>
+	<ul>
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+	</ul>
+	<input type="text" id="password">
+
+	<script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			$("#customID").text("Change")
+			$("h1").text("Changed via jQuery")
+			$("p.custom-class").html("<strong>Bolded and replaced</strong>")
+			$("#custom-id").text("id")
+
+			const value = $("input").val("lala")
+			console.log(value)
+
+			const text = $("section").text()
+
+			$("h1")
+				.text("Changed text")
+				.prepend("<strong>bold </strong>")
+				.append("<i> italics</i>")
+			$("div#target")
+				.before("<h3>Hello</h3>")
+				.after("<h2>After</h2>")
+
+			// Delete DOM element
+			$("div p.middle-p").remove()
+
+			//DELETE all children
+			const $parent = $("div#parent")
+			$parent.empty("Hello World")
+			$parent.html("Hello")
+
+			// EVENT LISTENER
+			const $buttonParent = $("#buttonHere")
+			$parent.html("<button>Click me</button>")
+
+			$("button").click(function () {
+				console.log("clicked")
+			})
+
+			$("button").on("click", function () {
+				console.log("Also")
+			})
+
+			// Dynamically prove
+			$(document).on("click", "button", function () {
+				console.log("Complex")
+			})
+
+			//HOVER EVENT LISTENER
+			// $(selector).on(event, function(){})
+			$("#box")
+				.on("mouseenter", function () {
+					console.log("Hovering over box")
+				})
+				.on("mouseleave", function () {
+					console.log("Left box")
+				})
+			$(".select-me").on("keyup", function () {
+				console.log($(this).val())
+			})
+			// FOCUS EVENT
+			$("[name='mytextarea']")
+				.on("focus", function () {
+					console.log("You focused")
+				})
+				.on("blur", function () {
+					let websiteURL = $(this).val()
+					if (websiteURL.substr(0, 4) !== "http") {
+						websiteURL = `http://${websiteURL}`
+					}
+					$(this).val(websiteURL)
+				})
+
+			//PREVENT EVENT
+			$("form").on("submit", function (event) {
+				event.preventDefault()
+				console.log("prevented")
+			})
+			//HIDE ELEMENT
+			$("#clickme").on("click", function (e) {
+				e.preventDefault()
+				$("#box").hide()
+			})
+
+			//ADD CSS CLASS
+			const $box = $(".box")
+			setTimeout(() => {
+				$box.addClass("blue")
+			}, 2000)
+
+			//REMOVE CSS CLASS
+			const $removeBlue = $(".remove-blue")
+			$removeBlue.on("click", function () {
+				$box.removeClass("blue")
+			})
+
+			const $toggleBlue = $(".toggle-blue")
+			$toggleBlue.on("click", () => {
+				$box.toggleClass("blue")
+			})
+
+			// ADD CSS
+			$box.css("border", "10px solid orange")
+				.css({
+					backgroundColor: "yellow",
+					border: "10px solid blue",
+					borderRadius: "50%"
+				})
+
+			$box.fadeOut(1000, function () {
+				console.log("fadeout complete")
+			})
+			$box.fadeOut(1000)
+			$box.slideUp()
+			$box.slideDown()
+			//$(box).fadeToggle()
+			//$(box).toggle()
+
+			// Works with hard numbers, not colors
+			$("#animation").on("click", function () {
+				$("#anim").animate({
+					opacity: 0.5,
+					width: "500px"
+				}, 4000)
+			})
+
+			console.log($box.width())
+			console.log($box.outerWidth())
+
+			// WINDOW SIZE
+			$(window).on("resize", function () {
+				console.log($(window).width(), "x", $(window).height())
+				if ($(window).width() <= 230) {
+					$("body").css("background-color", "yellow")
+				} else {
+					$("body").css("background-color", "white")
+				}
+			})
+
+
+			//LOOPING ELEMENTS
+			$("li").each(function (index, element) {
+				$(element).text(`${index + 1}, New item`)
+				if (index === 2) {
+					$(element)
+						.css("color", "red")
+				}
+			})
+
+			//CHANGE ATTRIBUTES
+			$pass = $("#password")
+			$pass.attr("type", "password")
+			console.log($pass.val())
+
+
+			//AJAX GET
+			$.get("https://swapi.dev/api/people/1", function (data) {
+				console.log(data["name"])
+			})
+
+			//AJAX POST
+			$.post("https://httpbin.org/post",
+				{ "Hello": "World" },
+				function (data) {
+					console.log(data)
+				})
+		})
+		// $(QUERY SELECTOR).EVENT(function() {})
+
+	</script>
+</body>
+
+</html>

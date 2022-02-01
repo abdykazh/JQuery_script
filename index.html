@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>STARWARS</title>
+</head>
+
+<body>
+	<h1>GET RANDOM STARWARS CHARACTER THROUGH JQUERY</h1>
+	<button>Get Character</button>
+	<h2 class="name"></h2>
+	<img src="" class="character-img" alt="">
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			$("button").on("click", () => {
+				const num = Math.ceil(Math.random() * 88);
+				const url = `https://akabab.github.io/starwars-api/api/id/${num}.json`
+				$.get(url, function (data) {
+					$("h2.name").text(data["name"])
+					$(".character-img").attr("src", data["image"])
+				})
+			})
+		})
+	</script>
+</body>
+
+</html>
